@@ -4,8 +4,9 @@ voting workflow via a secure multi-party computation (MPC)
 `protocol <https://eprint.iacr.org/2023/1740>`__.
 """
 from __future__ import annotations
-from typing import List
+from typing import Dict, List, Tuple, Sequence, Iterable
 import doctest
+from modulo import modulo
 import tinynmc
 
 class node:
@@ -72,7 +73,7 @@ class node:
     >>> reveal(shares)
     [1, 3]
     """
-    def __init__(self):
+    def __init__(self: node):
         """
         Create a node instance and define its private attributes.
         """
@@ -80,7 +81,10 @@ class node:
         self._choices: int = None
         self._nodes: List[tinynmc.node] = None
 
-    def masks(self, request): # pylint: disable=redefined-outer-name
+    def masks( # pylint: disable=redefined-outer-name
+            self: node,
+            request: Iterable[Tuple[int, int]]
+        ) -> List[Dict[Tuple[int, int], modulo]]:
         """
         Return masks for a given request.
 
@@ -91,19 +95,19 @@ class node:
             for i in range(self._choices)
         ]
 
-    def outcome(self, votes):
+    def outcome(self: node, votes: Sequence[vote]) -> List[modulo]:
         """
         Perform computation to determine a share of the overall outcome.
 
         :param votes: Sequence of masked votes.
         """
-        choices = len(votes[0])
+        choices: int = len(votes[0])
         return [ # pylint: disable=unsubscriptable-object
             self._nodes[i].compute(self._signature, [vote_[i] for vote_ in votes])
             for i in range(choices)
         ]
 
-class request(list):
+class request(List[Tuple[int, int]]):
     """
     Data structure for representing a request to submit a vote. A request can be
     submitted to each node to obtain corresponding masks for a vote.
@@ -117,10 +121,10 @@ class request(list):
     >>> request(identifier=3),
     ([(0, 3)],)
     """
-    def __init__(self, identifier):
+    def __init__(self: request, identifier: int):
         self.append((0, identifier))
 
-class vote(list):
+class vote(List[Dict[Tuple[int, int], modulo]]):
     """
     Data structure for representing a vote that can be broadcast to nodes.
 
@@ -142,11 +146,15 @@ class vote(list):
     >>> isinstance(vote(masks, choice), vote)
     True
     """
-    def __init__(self, masks, choice):
+    def __init__(
+            self: vote,
+            masks: List[List[Dict[Tuple[int, int], modulo]]],
+            choice: int
+        ):
         """
         Create a masked vote choice that can be broadcast to nodes.
         """
-        choices = len(masks[0])
+        choices: int = len(masks[0])
         for i in range(choices):
             masks_i = [mask[i] for mask in masks]
             key = list(masks_i[0].keys())[0]
@@ -154,7 +162,7 @@ class vote(list):
             coordinate_to_value[key] = 2 if i == choice else 1
             self.append(tinynmc.masked_factors(coordinate_to_value, masks_i))
 
-def preprocess(nodes, votes, choices):
+def preprocess(nodes: Sequence[node], votes: int, choices: int):
     """
     Simulate a preprocessing workflow among the supplied nodes for a workflow
     that supports the specified number of votes and distinct choices (where
@@ -171,7 +179,7 @@ def preprocess(nodes, votes, choices):
     >>> preprocess(nodes, votes=4, choices=3)
     """
     # pylint: disable=protected-access
-    signature = [votes]
+    signature: List[int] = [votes]
 
     for node_ in nodes:
         node_._signature = signature
@@ -206,7 +214,7 @@ def reveal(shares):
     >>> reveal(shares)
     [3, 2, 4]
     """
-    choices = len(shares[0])
+    choices: int = len(shares[0])
     return [
         int(sum(share[i] for share in shares)).bit_length() - 1
         for i in range(choices)
