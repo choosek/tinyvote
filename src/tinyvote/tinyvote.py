@@ -12,6 +12,65 @@ class node:
     """
     Data structure for maintaining the information associated with a node
     and performing node operations.
+
+    Suppose that a secure decentralized voting workflow is supported by three
+    nodes. The :obj:`node` objects would be instantiated locally by each of
+    these three parties.
+
+    >>> nodes = [node(), node(), node()]
+
+    The preprocessing workflow that the nodes must execute can be simulated
+    using the :obj:`preprocess` function. The number of voters that the
+    workflow supports must be known, and it is assumed that all permitted
+    choices are integers greater than or equal to ``0`` and strictly less
+    than a fixed maximum value. The number of voters and the number of
+    distinct choices must be supplied to the :obj:`preprocess` function.
+
+    >>> preprocess(nodes, votes=4, choices=2)
+
+    Each voter must then submit a request for the opportunity to submit their
+    vote. The voters can create :obj:`request` instances for this purpose. In
+    the example below, each of the four voters creates such a request.
+
+    >>> request_zero = request(identifier=0)
+    >>> request_one = request(identifier=1)
+    >>> request_two = request(identifier=2)
+    >>> request_three = request(identifier=3)
+
+    Each voter can deliver their request to each node, and each node can then
+    locally use its :obj:`masks` method to generate masks that can be returned
+    to the requesting voter.
+
+    >>> masks_zero = [node.masks(request_zero) for node in nodes]
+    >>> masks_one = [node.masks(request_one) for node in nodes]
+    >>> masks_two = [node.masks(request_two) for node in nodes]
+    >>> masks_three = [node.masks(request_three) for node in nodes]
+
+    Each voter can then generate locally a :obj:`vote` instance (*i.e.*, a
+    masked vote choice).
+
+    >>> vote_zero = vote(masks_zero, 0)
+    >>> vote_one = vote(masks_one, 1)
+    >>> vote_two = vote(masks_two, 1)
+    >>> vote_three = vote(masks_three, 1)
+
+    Every voter can broadcast its masked vote choice to all the nodes. Each
+    node can locally assemble these as they arrive. Once a node has received
+    all masked votes, it can determine its shares of the overall tally of the
+    votes using the :obj:`outcome` method.
+
+    >>> shares = [
+    ...     node.outcome([vote_zero, vote_one, vote_two, vote_three])
+    ...     for node in nodes
+    ... ]
+
+    The overall outcome can be reconstructed from the shares by the voting
+    workflow operator using the :obj:`reveal` function. The outcome is
+    represented as a :obj:`list` in which each entry contains the tally for
+    the corresponding choice.
+
+    >>> reveal(shares)
+    [1, 3]
     """
     def __init__(self):
         """

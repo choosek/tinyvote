@@ -43,6 +43,74 @@ The library can be imported in the usual way:
     import tinyvote
     from tinyvote import *
 
+Basic Example
+^^^^^^^^^^^^^
+
+.. |node| replace:: ``node``
+.. _node: https://tinyvote.readthedocs.io/en/0.1.0/_source/tinyvote.html#tinyvote.tinyvote.node
+
+Suppose that a secure decentralized voting workflow is supported by three nodes. The |node|_ objects would be instantiated locally by each of
+these three parties:
+
+.. code-block:: python
+
+    >>> nodes = [node(), node(), node()]
+
+The preprocessing workflow that the nodes must execute can be simulated. The number of voters that the workflow supports must be known, and it is assumed that all permitted choices are integers greater than or equal to ``0`` and strictly less than a fixed maximum value. The number of voters and the number of distinct choices must be known during preprocessing:
+
+.. code-block:: python
+
+    >>> preprocess(nodes, votes=4, choices=2)
+
+Each voter must submit a request for the opportunity to submit a vote. Below, each of the four voters creates such a request:
+
+.. code-block:: python
+
+    >>> request_zero = request(identifier=0)
+    >>> request_one = request(identifier=1)
+    >>> request_two = request(identifier=2)
+    >>> request_three = request(identifier=3)
+
+Each voter can deliver a request to each node, and each node can then locally to generate masks that can be returned to the requesting voter:
+
+.. code-block:: python
+
+    >>> masks_zero = [node.masks(request_zero) for node in nodes]
+    >>> masks_one = [node.masks(request_one) for node in nodes]
+    >>> masks_two = [node.masks(request_two) for node in nodes]
+    >>> masks_three = [node.masks(request_three) for node in nodes]
+
+.. |vote| replace:: ``vote``
+.. _vote: https://tinyvote.readthedocs.io/en/0.1.0/_source/tinyvote.html#tinyvote.tinyvote.vote
+
+Each voter can then generate locally a |vote|_ instance (*i.e.*, a masked choice):
+
+.. code-block:: python
+
+    >>> vote_zero = vote(masks_zero, 0)
+    >>> vote_one = vote(masks_one, 1)
+    >>> vote_two = vote(masks_two, 1)
+    >>> vote_three = vote(masks_three, 1)
+
+Every voter can broadcast its masked vote choice to all the nodes. Each node can locally assemble these as they arrive. Once a node has received all masked votes, it can determine its shares of the overall tally of the votes:
+
+.. code-block:: python
+
+    >>> shares = [
+    ...     node.outcome([vote_zero, vote_one, vote_two, vote_three])
+    ...     for node in nodes
+    ... ]
+
+.. |list| replace:: ``list``
+.. _list: https://docs.python.org/3/library/functions.html#func-list
+
+The overall outcome can be reconstructed from the shares by the voting workflow operator. The outcome is represented as a |list|_ in which each entry contains the tally for the corresponding choice:
+
+.. code-block:: python
+
+    >>> reveal(shares)
+    [1, 3]
+
 Development
 -----------
 All installation and development dependencies are fully specified in ``pyproject.toml``. The ``project.optional-dependencies`` object is used to `specify optional requirements <https://peps.python.org/pep-0621>`__ for various development tasks. This makes it possible to specify additional options (such as ``docs``, ``lint``, and so on) when performing installation using `pip <https://pypi.org/project/pip>`__:
