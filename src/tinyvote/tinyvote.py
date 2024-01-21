@@ -189,13 +189,13 @@ def preprocess(nodes: Sequence[node], votes: int, choices: int):
     for i in range(choices):
         tinynmc.preprocess(signature, [node_._nodes[i] for node_ in nodes])
 
-def reveal(shares):
+def reveal(shares: List[List[modulo]]) -> List[int]:
     """
     Reconstruct the overall tally of votes from the shares obtained from each
     node.
 
-    :param shares: Tally shares (where each share is a list of components,
-        with one component per permitted price).
+    :param shares: Shares of overall outcome tally (where each share is a list
+        of components, with one component per permitted price).
 
     Suppose the shares below are returned from the three nodes in a workflow.
 
