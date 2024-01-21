@@ -83,7 +83,7 @@ Each voter can deliver a request to each node, and each node can then locally to
 .. |vote| replace:: ``vote``
 .. _vote: https://tinyvote.readthedocs.io/en/0.1.0/_source/tinyvote.html#tinyvote.tinyvote.vote
 
-Each voter can then generate locally a |vote|_ instance (*i.e.*, a masked choice):
+Each voter can then generate locally a |vote|_ instance (*i.e.*, a masked vote choice):
 
 .. code-block:: python
 
@@ -104,7 +104,7 @@ Every voter can broadcast its masked vote choice to all the nodes. Each node can
 .. |list| replace:: ``list``
 .. _list: https://docs.python.org/3/library/functions.html#func-list
 
-The overall outcome can be reconstructed from the shares by the voting workflow operator. The outcome is represented as a |list|_ in which each entry contains the tally for the corresponding choice:
+The overall outcome can be reconstructed from the shares by the voting workflow operator. The outcome is represented as a |list|_ in which each entry contains the tally for the choice corresponding to the entry's index:
 
 .. code-block:: python
 

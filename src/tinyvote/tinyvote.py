@@ -68,7 +68,7 @@ class node:
     The overall outcome can be reconstructed from the shares by the voting
     workflow operator using the :obj:`reveal` function. The outcome is
     represented as a :obj:`list` in which each entry contains the tally for
-    the corresponding choice.
+    the choice corresponding to the entry's index.
 
     >>> reveal(shares)
     [1, 3]
