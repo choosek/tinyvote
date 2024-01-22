@@ -15,7 +15,7 @@ class node:
     and performing node operations.
 
     Suppose that a secure decentralized voting workflow is supported by three
-    nodes. The :obj:`node` objects would be instantiated locally by each of
+    parties. The :obj:`node` objects would be instantiated locally by each of
     these three parties.
 
     >>> nodes = [node(), node(), node()]
@@ -75,7 +75,7 @@ class node:
     """
     def __init__(self: node):
         """
-        Create a node instance and define its private attributes.
+        Create a node instance and instantiate its private attributes.
         """
         self._signature: List[int] = None
         self._choices: int = None
@@ -195,7 +195,7 @@ def reveal(shares: List[List[modulo]]) -> List[int]:
     node.
 
     :param shares: Shares of overall outcome tally (where each share is a list
-        of components, with one component per permitted price).
+        of components, with one component per permitted choice).
 
     Suppose the shares below are returned from the three nodes in a workflow.
 
@@ -208,8 +208,8 @@ def reveal(shares: List[List[modulo]]) -> List[int]:
     ... ]
 
     This method combines such shares into an overall outcome by reconstructing
-    the individual components and returning a list representing the a tally of
-    the total number of votes for each choice.
+    the individual components and returning a list representing a tally of the
+    total number of votes for each choice.
 
     >>> reveal(shares)
     [3, 2, 4]
