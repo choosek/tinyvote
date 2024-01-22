@@ -280,7 +280,7 @@
             <hr/>
             <h2>
               <p>
-                This secure voting workflow demo (source code <a href="https://github.com/choosek/tinyvote/tree/gh-pages">available on GitHub</a>) simulates a secure multi-party computation (MPC) protocol <b>entirely in your browser</b> by importing and invoking the <a href="https://github.com/nillion-oss/tinynmc">tinynmc</a> library using <a href="https://pyscript.net">PyScript</a>.
+                This secure voting workflow demo (source code <a href="https://github.com/choosek/tinyvote/tree/gh-pages">available on GitHub</a>) simulates a secure multi-party computation (MPC) protocol <b>entirely in your browser</b> by importing and invoking the <a href="https://github.com/choosek/tinyvote">tinyvote</a> library using <a href="https://pyscript.net">PyScript</a>.
               </p>
               <p>
                 Within the implementation of the library, vectors of <a href="https://en.wikipedia.org/wiki/Finite_field">finite field</a> elements are used to represent both submitted votes and the overall outcome. In the visualizations below, instances of these data structures are rendered using a variant of a <a href="https://en.wikipedia.org/wiki/Heat_map">heat map</a> in which the brightness value corresponds to the difference between the finite field element and zero. For example, a vector such as
@@ -546,7 +546,7 @@
       </div>
     </footer>
     <py-config>
-      packages = ["tinynmc", "tinyvote"]
+      packages = ["tinyvote~=0.1"]
     </py-config>
     <section class="pyscript">
       <py-script>
