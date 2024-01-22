@@ -2,7 +2,7 @@
 tinyvote
 ========
 
-Minimal pure-Python library that demonstrates a basic encrypted voting workflow via a secure multi-party computation (MPC) `protocol <https://eprint.iacr.org/2023/1740>`__.
+Minimal pure-Python library that demonstrates a basic encrypted voting workflow by leveraging a secure multi-party computation (MPC) `protocol <https://eprint.iacr.org/2023/1740>`__.
 
 |pypi| |readthedocs| |actions| |coveralls|
 
@@ -24,12 +24,10 @@ Minimal pure-Python library that demonstrates a basic encrypted voting workflow 
 
 Purpose
 -------
-
 This library demonstrates how a functionality can be implemented using a `secure multi-party computation (MPC) protocol <https://eprint.iacr.org/2023/1740>`__ for evaluating arithmetic sum-of-products expressions (as implemented in `tinynmc <https://pypi.org/project/tinynmc>`__). The approach used in this library can serve as a template for any workflow that relies on multiple simultaneous instances of such a protocol.
 
 Installation and Usage
 ----------------------
-
 This library is available as a `package on PyPI <https://pypi.org/project/tinyvote>`__:
 
 .. code-block:: bash
@@ -47,16 +45,15 @@ Basic Example
 ^^^^^^^^^^^^^
 
 .. |node| replace:: ``node``
-.. _node: https://tinyvote.readthedocs.io/en/0.1.1/_source/tinyvote.html#tinyvote.tinyvote.node
+.. _node: https://tinyvote.readthedocs.io/en/0.1.2/_source/tinyvote.html#tinyvote.tinyvote.node
 
-Suppose that a secure decentralized voting workflow is supported by three nodes. The |node|_ objects would be instantiated locally by each of
-these three parties:
+Suppose that a secure decentralized voting workflow is supported by three parties. The |node|_ objects would be instantiated locally by each of these three parties:
 
 .. code-block:: python
 
     >>> nodes = [node(), node(), node()]
 
-The preprocessing workflow that the nodes must execute can be simulated. The number of voters that the workflow supports must be known, and it is assumed that all permitted choices are integers greater than or equal to ``0`` and strictly less than a fixed maximum value. The number of voters and the number of distinct choices must be known during preprocessing:
+The preprocessing workflow that the nodes must execute can be simulated. The number of voters that the workflow supports must be known, and it is assumed that all permitted choices are integers greater than or equal to ``0`` and strictly less than a fixed maximum value. The number of voters and the number of distinct choices can be supplied to the preprocessing simulation:
 
 .. code-block:: python
 
@@ -71,7 +68,7 @@ Each voter must submit a request for the opportunity to submit a vote. Below, ea
     >>> request_two = request(identifier=2)
     >>> request_three = request(identifier=3)
 
-Each voter can deliver a request to each node, and each node can then locally to generate masks that can be returned to the requesting voter:
+Each voter can deliver a request to each node, and each node can then locally generate masks that can be returned to the requesting voter:
 
 .. code-block:: python
 
@@ -81,7 +78,7 @@ Each voter can deliver a request to each node, and each node can then locally to
     >>> masks_three = [node.masks(request_three) for node in nodes]
 
 .. |vote| replace:: ``vote``
-.. _vote: https://tinyvote.readthedocs.io/en/0.1.1/_source/tinyvote.html#tinyvote.tinyvote.vote
+.. _vote: https://tinyvote.readthedocs.io/en/0.1.2/_source/tinyvote.html#tinyvote.tinyvote.vote
 
 Each voter can then generate locally a |vote|_ instance (*i.e.*, a masked vote choice):
 

@@ -1,6 +1,6 @@
 """
 Minimal pure-Python library that demonstrates a basic encrypted
-voting workflow via a secure multi-party computation (MPC)
+voting workflow by leveraging a secure multi-party computation (MPC)
 `protocol <https://eprint.iacr.org/2023/1740>`__.
 """
 from __future__ import annotations

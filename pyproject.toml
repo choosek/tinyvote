@@ -1,9 +1,9 @@
 [project]
 name = "tinyvote"
-version = "0.1.1"
+version = "0.1.2"
 description = """\
     Minimal pure-Python library that demonstrates a basic encrypted voting \
-    workflow via a secure multi-party computation (MPC) protocol.\
+    workflow by leveraging a secure multi-party computation (MPC) protocol.\
     """
 license = {text = "MIT"}
 authors = [
