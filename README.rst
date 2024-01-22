@@ -47,7 +47,7 @@ Basic Example
 ^^^^^^^^^^^^^
 
 .. |node| replace:: ``node``
-.. _node: https://tinyvote.readthedocs.io/en/0.1.0/_source/tinyvote.html#tinyvote.tinyvote.node
+.. _node: https://tinyvote.readthedocs.io/en/0.1.1/_source/tinyvote.html#tinyvote.tinyvote.node
 
 Suppose that a secure decentralized voting workflow is supported by three nodes. The |node|_ objects would be instantiated locally by each of
 these three parties:
@@ -81,7 +81,7 @@ Each voter can deliver a request to each node, and each node can then locally to
     >>> masks_three = [node.masks(request_three) for node in nodes]
 
 .. |vote| replace:: ``vote``
-.. _vote: https://tinyvote.readthedocs.io/en/0.1.0/_source/tinyvote.html#tinyvote.tinyvote.vote
+.. _vote: https://tinyvote.readthedocs.io/en/0.1.1/_source/tinyvote.html#tinyvote.tinyvote.vote
 
 Each voter can then generate locally a |vote|_ instance (*i.e.*, a masked vote choice):
 
