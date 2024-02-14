@@ -37,8 +37,9 @@
         --color-interactive-disabled-dark:#444444;
         --color-interactive-shadow:#555555;
         --color-separator:#FFFFFF;
+        --color-client-shadow:#717171;
         --color-client-background:#FFFFFF;
-        --color-client-border:#000000;
+        --color-client-border:#FFFFFF;
         --color-client-text:#000000;
         --color-node-background:#000000;
         --color-node-border:#FFFFFF;
@@ -156,10 +157,6 @@
         footer .item { font-size:18px; }
         .bottom-spacer { min-height:10px; }
       }
-      @media all and (max-width:539px) {
-        .header { margin-bottom:5px; }
-        h2 { line-height:20px; font-size:14px; }
-      }
       @media all and (max-width:550px) {
         footer .footer-window { height:59px; }
         footer .card { min-width:0px !important; }
@@ -169,6 +166,10 @@
         footer .item { font-size:14px !important; }
         footer .icon { margin-right:6px; font-size:20px !important; }
         footer .fa-house { top:6px; left:-23px; font-size:18px; }
+      }
+      @media all and (max-width:539px) {
+        .header { margin-bottom:5px; }
+        h2 { line-height:20px; font-size:14px; }
       }
 
       /************************************************************
@@ -187,8 +188,7 @@
        ****************************************************/
       .step > ol > li { margin-left:20px; font-size:42px; font-weight:bold; }
       .step > ol > li > div {
-        position:relative;
-        top:-16px;
+        position:relative; top:-16px;
         padding-right:8px;
         line-height:24px; 
         font-size:18px; font-weight:normal;
@@ -210,6 +210,16 @@
        * Panel elements (representing parties) and their layout. *
        ***********************************************************/
       .panel { height:100%; width:100%; margin:0px 10px 0px 0px; padding:0px 10px 0px 10px; }
+      .panel-shadowed { position:relative; top:-10px; left:-10px; height:100%; }
+      .panel-shadow {
+        position:relative; left:20px;
+        height:100%; width:calc(100% - 20px);
+        margin:10px 20px 0px 0px; padding:0px;
+        background-color:var(--color-client-shadow);
+      }
+      @media all and (max-width:767px) {
+        .panel-shadow { height:100%; width:calc(100% - 10px); margin-right:10px; }
+      }
       .entity { height:100%; margin-top:0px; padding:20px 24px 20px 24px; }
       .entity > div { display:table; height:100%; width:100%; }
       .entity > div > div { display:table-row; }
@@ -255,8 +265,12 @@
         font-size:12px; font-weight:bold;
       }
       .array > span:last-child { border-right:1px solid var(--color-text); }
-      .bytes { height:10px; margin:8px 4px 8px 4px; white-space:nowrap; }
-      .bytes > span { padding-right:24px; font-size:14px; }
+      .bytes { position:relative; height:10px; margin:8px 4px 8px 4px; white-space:nowrap; }
+      .bytes > span {
+        position:relative; top:-2px;
+        padding-right:24px;
+        font-size:10px;
+      }
       .bytes > table { height:100%; width:100%; }
       @media all and (max-width:539px) {
         .array > span { font-size:10px; }
@@ -376,85 +390,93 @@
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity client">
-              <div>
-                <div><h3>Voter 0</h3></div>
+          <div class="panel-shadow">
+            <div class="panel-shadowed">
+              <div class="entity client">
                 <div>
+                  <div><h3>Voter 0</h3></div>
                   <div>
-                    <fieldset class="vote-radio">
-                      <label for="vote-radio-0-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-0" id="vote-radio-0-A" value="A">
-                      <br/>
-                      <label for="vote-radio-0-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-0" id="vote-radio-0-B" value="B">
-                    </fieldset>
+                    <div>
+                      <fieldset class="vote-radio">
+                        <label for="vote-radio-0-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-0" id="vote-radio-0-A" value="A">
+                        <br/>
+                        <label for="vote-radio-0-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-0" id="vote-radio-0-B" value="B">
+                      </fieldset>
+                    </div>
                   </div>
+                  <div><div><button id="vote-0">Submit</button></div></div>
                 </div>
-                <div><div><button id="vote-0">Submit</button></div></div>
               </div>
             </div>
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity client">
-              <div>
-                <div><h3>Voter 1</h3></div>
+          <div class="panel-shadow">
+            <div class="panel-shadowed">
+              <div class="entity client">
                 <div>
+                  <div><h3>Voter 1</h3></div>
                   <div>
-                    <fieldset class="vote-radio">
-                      <label for="vote-radio-1-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-1" id="vote-radio-1-A" value="A">
-                      <br/>
-                      <label for="vote-radio-1-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-1" id="vote-radio-1-B" value="B">
-                    </fieldset>
+                    <div>
+                      <fieldset class="vote-radio">
+                        <label for="vote-radio-1-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-1" id="vote-radio-1-A" value="A">
+                        <br/>
+                        <label for="vote-radio-1-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-1" id="vote-radio-1-B" value="B">
+                      </fieldset>
+                    </div>
                   </div>
+                  <div><div><button id="vote-1">Submit</button></div></div>
                 </div>
-                <div><div><button id="vote-1">Submit</button></div></div>
               </div>
             </div>
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity client">
-              <div>
-                <div><h3>Voter 2</h3></div>
+          <div class="panel-shadow">
+            <div class="panel-shadowed">
+              <div class="entity client">
                 <div>
+                  <div><h3>Voter 2</h3></div>
                   <div>
-                    <fieldset class="vote-radio">
-                      <label for="vote-radio-2-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-2" id="vote-radio-2-A" value="A">
-                      <br/>
-                      <label for="vote-radio-2-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-2" id="vote-radio-2-B" value="B">
-                    </fieldset>
+                    <div>
+                      <fieldset class="vote-radio">
+                        <label for="vote-radio-2-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-2" id="vote-radio-2-A" value="A">
+                        <br/>
+                        <label for="vote-radio-2-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-2" id="vote-radio-2-B" value="B">
+                      </fieldset>
+                    </div>
                   </div>
+                 <div><div><button id="vote-2">Submit</button></div></div>
                 </div>
-               <div><div><button id="vote-2">Submit</button></div></div>
               </div>
             </div>
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity client">
-              <div>
-                <div><h3>Voter 3</h3></div>
+          <div class="panel-shadow">
+            <div class="panel-shadowed">
+              <div class="entity client">
                 <div>
+                  <div><h3>Voter 3</h3></div>
                   <div>
-                    <fieldset class="vote-radio">
-                      <label for="vote-radio-3-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-3" id="vote-radio-3-A" value="A">
-                      <br/>
-                      <label for="vote-radio-3-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
-                      <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-3" id="vote-radio-3-B" value="B">
-                    </fieldset>
+                    <div>
+                      <fieldset class="vote-radio">
+                        <label for="vote-radio-3-A" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Alice</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-3" id="vote-radio-3-A" value="A">
+                        <br/>
+                        <label for="vote-radio-3-B" class="ui-checkboxradio-label ui-corner-all ui-button ui-widget ui-checkboxradio-radio-label">Bob</label>
+                        <input type="radio" class="ui-checkboxradio ui-helper-hidden-accessible" name="vote-radio-3" id="vote-radio-3-B" value="B">
+                      </fieldset>
+                    </div>
                   </div>
+                  <div><div><button id="vote-3">Submit</button></div></div>
                 </div>
-                <div><div><button id="vote-3">Submit</button></div></div>
               </div>
             </div>
           </div>
@@ -479,23 +501,23 @@
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity node" id="node-0">
+          <div class="panel" id="node-0-panel">
+            <div class="entity node">
               <div>
                 <div><h3>Node 0</h3></div>
                 <div>
                   <div>
                     <h4 class="noselect" id="node-0-votes-title">Masked Votes</h4>
-                    <div class="bytes" id="vote-masked-0-at-node-0"></div>
-                    <div class="bytes" id="vote-masked-1-at-node-0"></div>
-                    <div class="bytes" id="vote-masked-2-at-node-0"></div>
-                    <div class="bytes" id="vote-masked-3-at-node-0"></div>
+                    <div class="bytes" id="node-0-vote-masked-0"></div>
+                    <div class="bytes" id="node-0-vote-masked-1"></div>
+                    <div class="bytes" id="node-0-vote-masked-2"></div>
+                    <div class="bytes" id="node-0-vote-masked-3"></div>
                   </div>
                 </div>
                 <div>
                   <div>
                     <h4 class="noselect" id="node-0-share-title">Secret Share of Outcome</h4>
-                    <div class="bytes" id="share-at-node-0"></div>
+                    <div class="bytes" id="node-0-share"></div>
                   </div>
                 </div>
               </div>
@@ -503,23 +525,23 @@
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity node" id="node-1">
+          <div class="panel" id="node-1-panel">
+            <div class="entity node">
               <div>
                 <div><h3>Node 1</h3></div>
                 <div>
                   <div>
                     <h4 class="noselect" id="node-1-votes-title">Masked Votes</h4>
-                    <div class="bytes" id="vote-masked-0-at-node-1"></div>
-                    <div class="bytes" id="vote-masked-1-at-node-1"></div>
-                    <div class="bytes" id="vote-masked-2-at-node-1"></div>
-                    <div class="bytes" id="vote-masked-3-at-node-1"></div>
+                    <div class="bytes" id="node-1-vote-masked-0"></div>
+                    <div class="bytes" id="node-1-vote-masked-1"></div>
+                    <div class="bytes" id="node-1-vote-masked-2"></div>
+                    <div class="bytes" id="node-1-vote-masked-3"></div>
                   </div>
                 </div>
                 <div>
                   <div>
                     <h4 class="noselect" id="node-1-share-title">Secret Share of Outcome</h4>
-                    <div class="bytes" id="share-at-node-1"></div>
+                    <div class="bytes" id="node-1-share"></div>
                   </div>
                 </div>
               </div>
@@ -527,23 +549,23 @@
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity node" id="node-2">
+          <div class="panel" id="node-2-panel">
+            <div class="entity node">
               <div>
                 <div><h3>Node 2</h3></div>
                 <div>
                   <div>
                     <h4 class="noselect" id="node-2-votes-title">Masked Votes</h4>
-                    <div class="bytes" id="vote-masked-0-at-node-2"></div>
-                    <div class="bytes" id="vote-masked-1-at-node-2"></div>
-                    <div class="bytes" id="vote-masked-2-at-node-2"></div>
-                    <div class="bytes" id="vote-masked-3-at-node-2"></div>
+                    <div class="bytes" id="node-2-vote-masked-0"></div>
+                    <div class="bytes" id="node-2-vote-masked-1"></div>
+                    <div class="bytes" id="node-2-vote-masked-2"></div>
+                    <div class="bytes" id="node-2-vote-masked-3"></div>
                   </div>
                 </div>
                 <div>
                   <div>
                     <h4 class="noselect" id="node-2-share-title">Secret Share of Outcome</h4>
-                    <div class="bytes" id="share-at-node-2"></div>
+                    <div class="bytes" id="node-2-share"></div>
                   </div>
                 </div>
               </div>
@@ -570,13 +592,15 @@
           </div>
         </div>
         <div class="grid-col">
-          <div class="panel">
-            <div class="entity client recipient" id="recipient">
-              <div>
-                <div><h3>Network Output</h3></div>
+          <div class="panel-shadow" id="panel-recipient">
+            <div class="panel-shadowed">
+              <div class="entity client recipient">
                 <div>
+                  <div><h3>Network Output</h3></div>
                   <div>
-                    <div id="recipient-output"></div>
+                    <div>
+                      <div id="recipient-output"></div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -616,10 +640,7 @@
       <py-script>
         from pyodide.ffi import create_proxy
         import js
-
         from tinyvote import *
-
-        votes = [None, None, None, None]
 
         def modulo_to_uint8(m):
             return 64 + (((255 - 64) * int(m)) // m.modulus)
@@ -640,9 +661,9 @@
         def make_vote_handler(vote_id):
 
             def vote_handler(_):
+                choice = js.clientGetVoteAndDisable(vote_id)
                 request_ = request(identifier=vote_id)
                 masks = [node.masks(request_) for node in nodes]
-                choice = js.clientGetVoteAndDisable(vote_id)
                 votes[vote_id] = vote(masks, choice)
                 js.diagramInputUpdate()
                 js.nodesEnable()
@@ -656,8 +677,10 @@
             return vote_handler
 
         nodes = [node(), node(), node()]
-        preprocess(nodes, votes=4, choices=3)
-        for vote_id in range(4):
+        votes = [None, None, None, None]
+
+        preprocess(nodes, votes=len(votes), choices=3)
+        for vote_id in range(len(votes)):
             js.document.getElementById('vote-' + str(vote_id)).addEventListener(
                 'click',
                 create_proxy(make_vote_handler(vote_id))
@@ -766,23 +789,24 @@
         bytes.appendChild(table);
       }
 
-      function setOpacities(opacity, elementIds) {
+      function setActive(status, elementIds) {
         elementIds.map(function(elementId) {
-          document.getElementById(elementId).style.opacity = opacity;
+          document.getElementById(elementId).style.filter =
+            status ? "brightness(100%)" : "brightness(25%)";
         });
       }
 
       async function initialize() {
         backgroundPixels();
 
-        setOpacities(0, [
+        setActive(false, [
             "node-0-votes-title", "node-0-share-title",
             "node-1-votes-title", "node-1-share-title",
             "node-2-votes-title", "node-2-share-title"
         ]);
-        setOpacities(0.2, [
-            "step-nodes", "node-0", "node-1", "node-2",
-            "step-recipient", "recipient"
+        setActive(false, [
+            "step-nodes", "node-0-panel", "node-1-panel", "node-2-panel",
+            "step-recipient", "panel-recipient"
         ]);
 
         diagramInput = new Diagram("diagram-input", 100);
@@ -833,22 +857,27 @@
       }
 
       function nodesEnable() {
-        setOpacities(1, ["step-nodes", "node-0", "node-1", "node-2"]);
+        setActive(
+          true,
+          ["step-nodes", "node-0-panel", "node-1-panel", "node-2-panel"]
+        );
       }
 
       function nodeShowVoteMasked(voteId, nodeId, data) {
-        setOpacities(1, ["node-" + nodeId + "-votes-title"]);
-        showBytes("vote-masked-" + voteId + "-at-node-" + nodeId, Array.from(data));
+        setActive(true, ["node-" + nodeId + "-votes-title"]);
+        showBytes("node-" + nodeId + "-vote-masked-" + voteId, Array.from(data));
       }
 
       function nodeShowShare(nodeId, data) {
-        setOpacities(1, ["node-" + nodeId + "-share-title"]);
-        showBytes("share-at-node-" + nodeId, Array.from(data));
+        setActive(true, ["node-" + nodeId + "-share-title"]);
+        showBytes("node-" + nodeId + "-share", Array.from(data));
       }
 
       function recipientEnable() {
-        ["ot0", "ot1", "ot2", "oh", "ob0"].map( function(id) { diagramOutput.show(id); } );
-        setOpacities(1, ["step-recipient", "recipient"]);
+        ["ot0", "ot1", "ot2", "oh", "ob0"].map(
+          function(id) { diagramOutput.show(id); }
+        );
+        setActive(true, ["step-recipient", "panel-recipient"]);
       }
 
       let votes = [{}, {}, {}, {}];
